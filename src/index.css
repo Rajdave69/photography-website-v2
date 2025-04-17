@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -96,6 +97,49 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gallery-bg text-gallery-text;
+  }
+}
+
+@layer components {
+  .gallery-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4;
+  }
+  
+  .gallery-image-container {
+    @apply relative overflow-hidden rounded-md transition-all duration-300 hover:shadow-lg cursor-pointer;
+  }
+  
+  .gallery-image {
+    @apply w-full h-full object-cover transition-transform duration-500 hover:scale-105;
+  }
+  
+  .gallery-tag {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gallery-accent bg-opacity-80 text-white mr-1 mb-1 transition-colors duration-200 hover:bg-opacity-100 cursor-pointer;
+  }
+  
+  .zoom-controls {
+    @apply absolute right-4 bottom-4 flex space-x-2 bg-black bg-opacity-50 rounded-md p-1;
+  }
+  
+  .tag-highlight {
+    @apply ring-2 ring-gallery-accent ring-offset-2 ring-offset-gallery-bg;
+  }
+  
+  .lightbox {
+    @apply fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center p-4;
+  }
+  
+  .lightbox-content {
+    @apply max-w-full max-h-full relative;
+  }
+  
+  .gallery-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 }
