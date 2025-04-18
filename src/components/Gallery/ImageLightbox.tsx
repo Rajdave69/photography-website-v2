@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { X, ZoomIn, ZoomOut, Tag as TagIcon, Calendar, Star } from 'lucide-react';
 import { ImageData } from '@/types';
@@ -13,12 +12,13 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
+  const [isClosing, setIsClosing] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Close on escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') handleClose();
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
@@ -31,6 +31,13 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
       document.body.style.overflow = '';
     };
   }, []);
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      onClose();
+    }, 200);
+  };
 
   const handleZoomIn = () => {
     setZoomLevel((prev) => Math.min(prev + 0.25, 3));
@@ -69,16 +76,16 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
 
   return (
     <div 
-      className="lightbox animate-fade-in"
-      onClick={onClose}
+      className={`lightbox ${isClosing ? 'animate-fade-out' : 'animate-fade-in'}`}
+      onClick={handleClose}
     >
       <div 
-        className="lightbox-content animate-zoom-in" 
+        className={`lightbox-content ${isClosing ? 'animate-scale-out' : 'animate-scale-in'}`}
         onClick={(e) => e.stopPropagation()}
       >
         <button 
           className="absolute top-4 right-4 z-10 text-white bg-black bg-opacity-50 rounded-full p-1 hover:bg-opacity-70 transition-colors"
-          onClick={onClose}
+          onClick={handleClose}
         >
           <X className="h-6 w-6" />
         </button>
@@ -121,7 +128,7 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
           </button>
         </div>
         
-        <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 rounded p-2 text-white text-sm space-y-1">
+        <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 rounded p-2 text-white text-sm space-y-1 transition-opacity duration-300 opacity-30 hover:opacity-100">
           <div className="text-sm font-medium mb-1">{image.alt}</div>
           <div className="flex items-center text-xs opacity-80">
             <Calendar className="h-3 w-3 mr-1" />
