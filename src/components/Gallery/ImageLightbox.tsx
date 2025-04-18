@@ -78,7 +78,7 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
 
   return (
     <div 
-      className={`fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center p-4 transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
+      className={`fixed inset-0 z-50 bg-black bg-opacity-95 flex items-center justify-center p-4 transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
       onClick={handleClose}
     >
       <div 
@@ -131,7 +131,7 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
         </div>
         
         <div 
-          className={`absolute bottom-4 left-4 bg-black bg-opacity-50 rounded p-2 text-white text-sm space-y-1 transition-opacity duration-300 ${isDetailsHovered ? 'opacity-100' : 'opacity-30'}`}
+          className={`absolute bottom-4 left-4 bg-black bg-opacity-70 rounded p-2 text-white text-sm space-y-1 transition-opacity duration-300 ${isDetailsHovered ? 'opacity-100' : 'opacity-50'}`}
           onMouseEnter={() => setIsDetailsHovered(true)}
           onMouseLeave={() => setIsDetailsHovered(false)}
         >

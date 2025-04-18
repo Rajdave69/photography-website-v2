@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { SortOption } from '@/types';
-import { ListFilter, Star, Clock, TagIcon } from 'lucide-react';
+import { ListFilter, Star, Clock, Folder } from 'lucide-react';
 
 interface SortControlsProps {
   currentSort: SortOption;
@@ -12,7 +12,7 @@ const SortControls: React.FC<SortControlsProps> = ({ currentSort, onSortChange }
   const sortOptions: Array<{ value: SortOption; label: string; icon: React.ReactNode }> = [
     { value: 'best', label: 'Best', icon: <Star className="h-4 w-4" /> },
     { value: 'new', label: 'New', icon: <Clock className="h-4 w-4" /> },
-    { value: 'category', label: 'Category', icon: <TagIcon className="h-4 w-4" /> }
+    { value: 'category', label: 'Category', icon: <Folder className="h-4 w-4" /> }
   ];
 
   return (
@@ -26,7 +26,7 @@ const SortControls: React.FC<SortControlsProps> = ({ currentSort, onSortChange }
           <button
             key={option.value}
             onClick={() => onSortChange(option.value)}
-            className={`flex items-center rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+            className={`flex items-center rounded-md px-3 py-1.5 text-sm font-medium transition-colors animate-fade-in ${
               currentSort === option.value
                 ? 'bg-gallery-accent text-white'
                 : 'bg-gallery-card text-gallery-text hover:bg-gallery-card/70'

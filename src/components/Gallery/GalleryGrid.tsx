@@ -29,18 +29,45 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ images }) => {
     <div>
       <div className="mb-6">
         <SortControls currentSort={sortOption} onSortChange={setSortOption} />
-        <TagFilter 
-          tags={uniqueTags} 
-          selectedTag={selectedTag} 
-          onSelectTag={setSelectedTag} 
-        />
+        {sortOption !== 'category' && (
+          <TagFilter 
+            tags={uniqueTags} 
+            selectedTag={selectedTag} 
+            onSelectTag={setSelectedTag} 
+          />
+        )}
+        {sortOption === 'category' && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto mt-6 animate-fade-in">
+            {uniqueTags.map((category) => {
+              const categoryImages = images.filter(img => img.tags.includes(category));
+              const imageCount = categoryImages.length;
+
+              return (
+                <button
+                  key={category}
+                  onClick={() => setSelectedTag(category)}
+                  className={`flex items-center justify-between h-auto p-4 border rounded-md hover:bg-gallery-accent/10 transition-colors duration-300 ${
+                    selectedTag === category ? 'border-gallery-accent bg-gallery-accent/5' : 'border-gray-200'
+                  }`}
+                >
+                  <div className="flex items-center">
+                    <span className="text-lg font-medium">#{category}</span>
+                  </div>
+                  <span className="text-gallery-muted text-sm">
+                    {imageCount} {imageCount === 1 ? 'photo' : 'photos'}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
-      {filteredImages.length === 0 ? (
+      {(sortOption !== 'category' || selectedTag) && filteredImages.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-gallery-muted">No images found with the selected filters.</p>
         </div>
-      ) : (
+      ) : (sortOption !== 'category' || selectedTag) ? (
         <div className="gallery-grid">
           {filteredImages.map((image) => (
             <GalleryImage
@@ -50,7 +77,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ images }) => {
             />
           ))}
         </div>
-      )}
+      ) : null}
 
       {selectedImage && (
         <ImageLightbox 
