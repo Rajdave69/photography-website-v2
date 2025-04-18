@@ -5,7 +5,7 @@ import Footer from '@/components/Layout/Footer';
 import { useNavigate } from 'react-router-dom';
 import { getUniqueTags } from '@/utils/imageUtils';
 import { images } from '@/data/images';
-import { Image } from 'lucide-react';
+import { Tag, Folder } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Categories = () => {
@@ -19,15 +19,15 @@ const Categories = () => {
       <main className="flex-grow container mx-auto px-4 py-8">
         <div className="mb-8 text-center">
           <div className="inline-flex items-center justify-center p-2 bg-gallery-accent bg-opacity-10 rounded-full mb-4">
-            <Image className="h-6 w-6 text-gallery-accent" />
+            <Folder className="h-6 w-6 text-gallery-accent" />
           </div>
           <h1 className="text-3xl font-bold mb-2">Photo Categories</h1>
           <p className="text-gallery-muted max-w-2xl mx-auto">
-            Browse my photography collection by category.
+            Select a category to view photos.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
           {categories.map((category) => {
             const categoryImages = images.filter(img => img.tags.includes(category));
             const imageCount = categoryImages.length;
@@ -37,17 +37,15 @@ const Categories = () => {
                 key={category}
                 onClick={() => navigate(`/?tag=${category}`)}
                 variant="outline"
-                className="flex flex-col h-auto p-6 hover:bg-gallery-accent/10 transition-colors duration-300"
+                className="flex items-center justify-between h-auto p-6 hover:bg-gallery-accent/10 transition-colors duration-300 animate-fade-in"
               >
-                <div className="w-16 h-16 rounded-full bg-gallery-accent/20 flex items-center justify-center mb-4">
-                  <Image className="h-8 w-8 text-gallery-accent" />
+                <div className="flex items-center">
+                  <Tag className="h-5 w-5 mr-3 text-gallery-accent" />
+                  <span className="text-lg font-medium">#{category}</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-1">
-                  #{category}
-                </h3>
-                <p className="text-gallery-muted text-sm">
+                <span className="text-gallery-muted text-sm">
                   {imageCount} {imageCount === 1 ? 'photo' : 'photos'}
-                </p>
+                </span>
               </Button>
             );
           })}
