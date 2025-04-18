@@ -5,7 +5,8 @@ import Footer from '@/components/Layout/Footer';
 import { useNavigate } from 'react-router-dom';
 import { getUniqueTags } from '@/utils/imageUtils';
 import { images } from '@/data/images';
-import { Camera, Image } from 'lucide-react';
+import { Image } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const Categories = () => {
   const navigate = useNavigate();
@@ -26,36 +27,28 @@ const Categories = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
           {categories.map((category) => {
             const categoryImages = images.filter(img => img.tags.includes(category));
-            const previewImage = categoryImages[0]?.src;
             const imageCount = categoryImages.length;
 
             return (
-              <button
+              <Button
                 key={category}
                 onClick={() => navigate(`/?tag=${category}`)}
-                className="group relative overflow-hidden rounded-lg aspect-video hover:scale-105 transition-transform duration-300"
+                variant="outline"
+                className="flex flex-col h-auto p-6 hover:bg-gallery-accent/10 transition-colors duration-300"
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/20 z-10" />
-                {previewImage && (
-                  <img
-                    src={previewImage}
-                    alt={category}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                )}
-                <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
-                  <h3 className="text-xl font-semibold text-white mb-1">
-                    #{category}
-                  </h3>
-                  <p className="text-white/80 text-sm">
-                    {imageCount} {imageCount === 1 ? 'photo' : 'photos'}
-                  </p>
+                <div className="w-16 h-16 rounded-full bg-gallery-accent/20 flex items-center justify-center mb-4">
+                  <Image className="h-8 w-8 text-gallery-accent" />
                 </div>
-              </button>
+                <h3 className="text-xl font-semibold mb-1">
+                  #{category}
+                </h3>
+                <p className="text-gallery-muted text-sm">
+                  {imageCount} {imageCount === 1 ? 'photo' : 'photos'}
+                </p>
+              </Button>
             );
           })}
         </div>

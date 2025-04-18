@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { X, ZoomIn, ZoomOut, Tag as TagIcon, Calendar, Star } from 'lucide-react';
 import { ImageData } from '@/types';
@@ -13,6 +14,7 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
   const [isClosing, setIsClosing] = useState(false);
+  const [isDetailsHovered, setIsDetailsHovered] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Close on escape key
@@ -22,7 +24,7 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
+  }, []);
 
   // Prevent scrolling when lightbox is open
   useEffect(() => {
@@ -36,7 +38,7 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
     setIsClosing(true);
     setTimeout(() => {
       onClose();
-    }, 200);
+    }, 300); // Match this with the CSS animation duration
   };
 
   const handleZoomIn = () => {
@@ -76,11 +78,11 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
 
   return (
     <div 
-      className={`lightbox ${isClosing ? 'animate-fade-out' : 'animate-fade-in'}`}
+      className={`fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center p-4 transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
       onClick={handleClose}
     >
       <div 
-        className={`lightbox-content ${isClosing ? 'animate-scale-out' : 'animate-scale-in'}`}
+        className={`relative max-w-full max-h-full transition-all duration-300 ${isClosing ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}
         onClick={(e) => e.stopPropagation()}
       >
         <button 
@@ -111,7 +113,7 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
           />
         </div>
         
-        <div className="zoom-controls">
+        <div className="zoom-controls absolute right-4 bottom-4 flex space-x-2 bg-black bg-opacity-50 rounded-md p-1">
           <button 
             onClick={handleZoomOut} 
             className="text-white p-1 hover:bg-white hover:bg-opacity-20 rounded transition-colors"
@@ -128,7 +130,11 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
           </button>
         </div>
         
-        <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 rounded p-2 text-white text-sm space-y-1 transition-opacity duration-300 opacity-30 hover:opacity-100">
+        <div 
+          className={`absolute bottom-4 left-4 bg-black bg-opacity-50 rounded p-2 text-white text-sm space-y-1 transition-opacity duration-300 ${isDetailsHovered ? 'opacity-100' : 'opacity-30'}`}
+          onMouseEnter={() => setIsDetailsHovered(true)}
+          onMouseLeave={() => setIsDetailsHovered(false)}
+        >
           <div className="text-sm font-medium mb-1">{image.alt}</div>
           <div className="flex items-center text-xs opacity-80">
             <Calendar className="h-3 w-3 mr-1" />
