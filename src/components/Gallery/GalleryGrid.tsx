@@ -68,14 +68,23 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ images }) => {
           <p className="text-gallery-muted">No images found with the selected filters.</p>
         </div>
       ) : (sortOption !== 'category' || selectedTag) ? (
-        <div className="gallery-grid">
-          {filteredImages.map((image) => (
-            <GalleryImage
-              key={image.id}
-              image={image}
-              onClick={() => setSelectedImage(image)}
-            />
-          ))}
+        <div className="masonry-grid">
+          {filteredImages.map((image, index) => {
+            // Determine if this image should be displayed as a featured (larger) item
+            const isFeatured = index % 5 === 0; // Every 5th image is featured
+            const spanClasses = isFeatured ? 
+              'md:col-span-2 md:row-span-2' : 
+              '';
+            
+            return (
+              <div key={image.id} className={`masonry-item ${spanClasses}`}>
+                <GalleryImage
+                  image={image}
+                  onClick={() => setSelectedImage(image)}
+                />
+              </div>
+            );
+          })}
         </div>
       ) : null}
 
