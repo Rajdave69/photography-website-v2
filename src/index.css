@@ -103,11 +103,11 @@
 
 @layer components {
   .masonry-grid {
-    @apply grid auto-rows-[minmax(100px,auto)] grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2;
+    @apply columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-3;
   }
   
   .masonry-item {
-    @apply break-inside-avoid;
+    @apply break-inside-avoid mb-3 inline-block w-full;
   }
   
   .gallery-image-container {
