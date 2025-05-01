@@ -70,14 +70,37 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ images }) => {
       ) : (sortOption !== 'category' || selectedTag) ? (
         <div className="masonry-grid">
           {filteredImages.map((image, index) => {
-            // Determine if this image should be displayed as a featured (larger) item
-            const isFeatured = index % 5 === 0; // Every 5th image is featured
-            const spanClasses = isFeatured ? 
-              'md:col-span-2 md:row-span-2' : 
-              '';
+            // Create a variable layout with different sizes
+            const layoutPatterns = [
+              'md:col-span-1 md:row-span-1',
+              'md:col-span-1 md:row-span-1',
+              'md:col-span-1 md:row-span-2',
+              'md:col-span-2 md:row-span-1',
+              'md:col-span-2 md:row-span-2',
+            ];
+            
+            // Use image aspect ratio to help determine the size class
+            const aspectRatio = image.width / image.height;
+            let sizeClassIndex;
+            
+            if (index % 7 === 0) {
+              // Featured image (large)
+              sizeClassIndex = 4; // col-span-2 row-span-2
+            } else if (aspectRatio > 1.5) {
+              // Very wide image
+              sizeClassIndex = 3; // col-span-2 row-span-1
+            } else if (aspectRatio < 0.7) {
+              // Very tall image
+              sizeClassIndex = 2; // col-span-1 row-span-2
+            } else {
+              // Regular image
+              sizeClassIndex = index % 2; // Alternate between first two patterns
+            }
+            
+            const sizeClass = layoutPatterns[sizeClassIndex];
             
             return (
-              <div key={image.id} className={`masonry-item ${spanClasses}`}>
+              <div key={image.id} className={`masonry-item ${sizeClass}`}>
                 <GalleryImage
                   image={image}
                   onClick={() => setSelectedImage(image)}
