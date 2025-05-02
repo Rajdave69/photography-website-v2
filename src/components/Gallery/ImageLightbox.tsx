@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, ZoomIn, ZoomOut, Tag as TagIcon, Calendar, Star } from 'lucide-react';
 import { ImageData } from '@/types';
+import { getFullImageUrl } from '@/utils/imageUtils';
 
 interface ImageLightboxProps {
   image: ImageData;
@@ -15,7 +16,11 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
   const [isClosing, setIsClosing] = useState(false);
   const [isDetailsHovered, setIsDetailsHovered] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Get full resolution image for the lightbox
+  const fullSizeSrc = getFullImageUrl(image.src);
 
   // Close on escape key
   useEffect(() => {
@@ -76,6 +81,10 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
     setIsDragging(false);
   };
 
+  const handleImageLoad = () => {
+    setIsImageLoaded(true);
+  };
+
   return (
     <div 
       className={`fixed inset-0 z-50 bg-black bg-opacity-95 flex items-center justify-center p-4 transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`}
@@ -92,6 +101,12 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
           <X className="h-6 w-6" />
         </button>
         
+        {!isImageLoaded && (
+          <div className="flex items-center justify-center w-full h-[50vh] text-white bg-black bg-opacity-50">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gallery-accent"></div>
+          </div>
+        )}
+        
         <div 
           ref={containerRef}
           className="overflow-hidden rounded-lg cursor-move"
@@ -102,14 +117,15 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
           style={{ maxWidth: '90vw', maxHeight: '80vh' }}
         >
           <img
-            src={image.src}
+            src={fullSizeSrc}
             alt={image.alt}
-            className="max-w-full max-h-[80vh] object-contain transition-transform"
+            className={`max-w-full max-h-[80vh] object-contain transition-transform ${!isImageLoaded ? 'opacity-0' : 'opacity-100'}`}
             style={{ 
               transform: `scale(${zoomLevel}) translate(${position.x / zoomLevel}px, ${position.y / zoomLevel}px)`,
               transformOrigin: 'center',
               cursor: isDragging ? 'grabbing' : 'grab'
             }}
+            onLoad={handleImageLoad}
           />
         </div>
         

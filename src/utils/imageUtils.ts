@@ -1,4 +1,3 @@
-
 import { ImageData, SortOption } from '../types';
 
 // Function to get optimized image src based on screen width
@@ -6,6 +5,32 @@ export const getOptimizedImageSrc = (image: ImageData, screenWidth: number): str
   // In a real application, you would have different sizes of images
   // For this demo, we'll just return the original image
   return image.src;
+};
+
+// Function to get preview image URL
+export const getPreviewImageUrl = (imageUrl: string): string => {
+  // For Unsplash images, we can use their API to get smaller versions
+  // Format: https://images.unsplash.com/photo-ID?param=value
+  if (imageUrl.includes('images.unsplash.com')) {
+    // Add width and quality parameters for preview
+    const separator = imageUrl.includes('?') ? '&' : '?';
+    return `${imageUrl}${separator}w=400&q=75&auto=format`;
+  }
+  
+  // For other image sources, return the original image
+  return imageUrl;
+};
+
+// Function to get full resolution image URL
+export const getFullImageUrl = (imageUrl: string): string => {
+  // For Unsplash images, ensure we get the full quality version
+  if (imageUrl.includes('images.unsplash.com')) {
+    // Strip any existing size parameters if they exist
+    const baseUrl = imageUrl.split('?')[0];
+    return `${baseUrl}?q=100&auto=format`;
+  }
+  
+  return imageUrl;
 };
 
 // Function to sort images based on the selected sort option

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { ImageData } from '@/types';
+import { getPreviewImageUrl } from '@/utils/imageUtils';
 
 interface GalleryImageProps {
   image: ImageData;
@@ -8,10 +9,13 @@ interface GalleryImageProps {
 }
 
 const GalleryImage: React.FC<GalleryImageProps> = ({ image, onClick }) => {
+  // Get optimized preview version of the image for the grid
+  const previewSrc = getPreviewImageUrl(image.src);
+  
   return (
     <div className="gallery-image-container animate-fade-in" onClick={onClick}>
       <img
-        src={image.src}
+        src={previewSrc}
         alt={image.alt}
         className="gallery-image"
         loading="lazy"
