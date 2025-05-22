@@ -68,7 +68,15 @@ export const getFullImageUrl = (imageUrl: string, isMobile = false): string => {
 export const sortImages = (images: ImageData[], sortOption: SortOption): ImageData[] => {
   switch (sortOption) {
     case 'best':
-      return [...images].sort((a, b) => b.rating - a.rating);
+      return [...images].sort((a, b) => {
+        // Primary sort by rating (descending)
+        const ratingDiff = b.rating - a.rating;
+        // If ratings are equal, sort alphabetically by alt text
+        if (ratingDiff === 0) {
+          return a.alt.localeCompare(b.alt);
+        }
+        return ratingDiff;
+      });
     case 'new':
       return [...images].sort((a, b) => 
         new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
