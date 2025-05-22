@@ -17,7 +17,6 @@ const GalleryImage: React.FC<GalleryImageProps> = ({ image, onClick }) => {
   return (
     <div className="gallery-image-container animate-fade-in" onClick={onClick}>
       <picture>
-        {/* WebP format with appropriate size */}
         <img
           src={previewSrc}
           alt={image.alt}

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Camera } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
   return (
@@ -13,9 +14,9 @@ const Header: React.FC = () => {
           </h1>
         </div>
         <nav className="hidden md:flex items-center space-x-6">
-          <a href="/" className="text-gallery-text hover:text-gallery-accent transition-colors">Gallery</a>
-          <a href="#" className="text-gallery-text hover:text-gallery-accent transition-colors">About</a>
-          <a href="#" className="text-gallery-text hover:text-gallery-accent transition-colors">Contact</a>
+          <Link to="/" className="text-gallery-text hover:text-gallery-accent transition-colors">Gallery</Link>
+          <Link to="/about" className="text-gallery-text hover:text-gallery-accent transition-colors">About</Link>
+          <Link to="/contact" className="text-gallery-text hover:text-gallery-accent transition-colors">Contact</Link>
         </nav>
       </div>
     </header>
