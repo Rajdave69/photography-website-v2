@@ -16,9 +16,9 @@ const Index = () => {
           <div className="inline-flex items-center justify-center p-2 bg-gallery-accent bg-opacity-10 rounded-full mb-4">
             <Camera className="h-6 w-6 text-gallery-accent" />
           </div>
-          <h1 className="text-3xl font-bold mb-2">Photography Gallery</h1>
+          <h1 className="text-3xl font-bold mb-2">Raj's Photography</h1>
           <p className="text-gallery-muted max-w-2xl mx-auto">
-            A curated collection of my best photography work. Browse by category or explore my latest captures.
+            A collection of the best pictures I've taken :D
           </p>
         </div>
         

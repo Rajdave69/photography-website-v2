@@ -10,13 +10,13 @@ const Header: React.FC = () => {
         <div className="flex items-center space-x-2">
           <Camera className="h-6 w-6 text-gallery-accent" />
           <h1 className="text-xl font-semibold">
-            <span className="text-gallery-accent">Shutter</span>bug
+            <span className="text-gallery-accent">Raj's </span>Photography
           </h1>
         </div>
         <nav className="hidden md:flex items-center space-x-6">
-          <Link to="/" className="text-gallery-text hover:text-gallery-accent transition-colors">Gallery</Link>
-          <Link to="/about" className="text-gallery-text hover:text-gallery-accent transition-colors">About</Link>
-          <Link to="/contact" className="text-gallery-text hover:text-gallery-accent transition-colors">Contact</Link>
+          {/*<Link to="/" className="text-gallery-text hover:text-gallery-accent transition-colors">Gallery</Link>*/}
+          {/*<Link to="/about" className="text-gallery-text hover:text-gallery-accent transition-colors">About</Link>*/}
+          {/*<Link to="/contact" className="text-gallery-text hover:text-gallery-accent transition-colors">Contact</Link>*/}
         </nav>
       </div>
     </header>
