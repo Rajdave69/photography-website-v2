@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { ImageData, SortOption } from '@/types';
 import GalleryImage from './GalleryImage';
@@ -5,7 +6,6 @@ import ImageLightbox from './ImageLightbox';
 import SortControls from './SortControls';
 import TagFilter from './TagFilter';
 import { sortImages, filterImagesByTag, getUniqueTags } from '@/utils/imageUtils';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 interface GalleryGridProps {
   images: ImageData[];
@@ -16,7 +16,6 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ images }) => {
   const [sortOption, setSortOption] = useState<SortOption>('best');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [filteredImages, setFilteredImages] = useState<ImageData[]>(images);
-  const isMobile = useIsMobile();
   const uniqueTags = getUniqueTags(images);
 
   useEffect(() => {
@@ -69,31 +68,16 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ images }) => {
           <p className="text-gallery-muted">No images found with the selected filters.</p>
         </div>
       ) : (sortOption !== 'category' || selectedTag) ? (
-        isMobile ? (
-          // Mobile view - keep the masonry layout
-          <div className="masonry-grid">
-            {filteredImages.map((image) => (
-              <div key={image.id} className="masonry-item">
-                <GalleryImage
-                  image={image}
-                  onClick={() => setSelectedImage(image)}
-                />
-              </div>
-            ))}
-          </div>
-        ) : (
-          // Desktop view - use a grid layout with left-to-right ordering
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredImages.map((image) => (
-              <div key={image.id} className="gallery-item">
-                <GalleryImage
-                  image={image}
-                  onClick={() => setSelectedImage(image)}
-                />
-              </div>
-            ))}
-          </div>
-        )
+        <div className="masonry-grid">
+          {filteredImages.map((image) => (
+            <div key={image.id} className="masonry-item">
+              <GalleryImage
+                image={image}
+                onClick={() => setSelectedImage(image)}
+              />
+            </div>
+          ))}
+        </div>
       ) : null}
 
       {selectedImage && (
