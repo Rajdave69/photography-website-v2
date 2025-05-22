@@ -1,36 +1,73 @@
 import { ImageData, SortOption } from '../types';
+import { useIsMobile } from '@/hooks/use-mobile';
+
+// Image size constants to make the code more maintainable
+export const IMAGE_SIZES = {
+  THUMBNAIL: 'thumbnail', // 200px width (for very small preview)
+  SMALL: 'small',      // 400px width (for grid on mobile)
+  MEDIUM: 'medium',    // 800px width (for grid on desktop)
+  LARGE: 'large',      // 1200px width (for lightbox on mobile)
+  FULL: 'full'         // Original size (for lightbox on desktop/download)
+};
+
+// Function to construct WebP image URL with correct size
+export const getSizedImageUrl = (imageUrl: string, size: string): string => {
+  // For actual implementation with local WebP images, you would:
+  // 1. Parse the original image path/name
+  // 2. Construct path to the correct sized version
+  // 3. Return the WebP version path
+  
+  // Example URL transformation for a real implementation with local images:
+  // From: /images/photo-123.jpg
+  // To: /images/photo-123-medium.webp
+  
+  // For Unsplash images, we can use their API to get resized versions
+  if (imageUrl.includes('images.unsplash.com')) {
+    const baseUrl = imageUrl.split('?')[0];
+    const separator = '?';
+    
+    switch (size) {
+      case IMAGE_SIZES.THUMBNAIL:
+        return `${baseUrl}${separator}w=200&q=70&fm=webp&auto=format`;
+      case IMAGE_SIZES.SMALL:
+        return `${baseUrl}${separator}w=400&q=75&fm=webp&auto=format`;
+      case IMAGE_SIZES.MEDIUM:
+        return `${baseUrl}${separator}w=800&q=80&fm=webp&auto=format`;
+      case IMAGE_SIZES.LARGE:
+        return `${baseUrl}${separator}w=1200&q=85&fm=webp&auto=format`;
+      case IMAGE_SIZES.FULL:
+        return `${baseUrl}${separator}w=1800&q=90&fm=webp&auto=format`;
+      default:
+        return `${baseUrl}${separator}q=80&fm=webp&auto=format`;
+    }
+  }
+  
+  // For other image sources, return with the size appended (this is a placeholder)
+  // In a real implementation, you would have actual different sized WebP images
+  return imageUrl;
+};
 
 // Function to get optimized image src based on screen width
 export const getOptimizedImageSrc = (image: ImageData, screenWidth: number): string => {
-  // In a real application, you would have different sizes of images
-  // For this demo, we'll just return the original image
-  return image.src;
-};
-
-// Function to get preview image URL
-export const getPreviewImageUrl = (imageUrl: string): string => {
-  // For Unsplash images, we can use their API to get smaller versions
-  // Format: https://images.unsplash.com/photo-ID?param=value
-  if (imageUrl.includes('images.unsplash.com')) {
-    // Add width and quality parameters for preview
-    const separator = imageUrl.includes('?') ? '&' : '?';
-    return `${imageUrl}${separator}w=400&q=75&auto=format`;
+  let size = IMAGE_SIZES.MEDIUM;
+  
+  if (screenWidth < 640) {
+    size = IMAGE_SIZES.SMALL;
+  } else if (screenWidth >= 1920) {
+    size = IMAGE_SIZES.LARGE;
   }
   
-  // For other image sources, return the original image
-  return imageUrl;
+  return getSizedImageUrl(image.src, size);
 };
 
-// Function to get full resolution image URL
-export const getFullImageUrl = (imageUrl: string): string => {
-  // For Unsplash images, ensure we get the full quality version
-  if (imageUrl.includes('images.unsplash.com')) {
-    // Strip any existing size parameters if they exist
-    const baseUrl = imageUrl.split('?')[0];
-    return `${baseUrl}?q=100&auto=format`;
-  }
-  
-  return imageUrl;
+// Function to get preview image URL for grid display
+export const getPreviewImageUrl = (imageUrl: string, isMobile = false): string => {
+  return getSizedImageUrl(imageUrl, isMobile ? IMAGE_SIZES.SMALL : IMAGE_SIZES.MEDIUM);
+};
+
+// Function to get full resolution image URL for lightbox
+export const getFullImageUrl = (imageUrl: string, isMobile = false): string => {
+  return getSizedImageUrl(imageUrl, isMobile ? IMAGE_SIZES.LARGE : IMAGE_SIZES.FULL);
 };
 
 // Function to sort images based on the selected sort option

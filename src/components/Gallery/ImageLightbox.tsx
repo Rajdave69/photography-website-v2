@@ -1,8 +1,8 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { X, ZoomIn, ZoomOut, Tag as TagIcon, Calendar, Star } from 'lucide-react';
 import { ImageData } from '@/types';
 import { getFullImageUrl } from '@/utils/imageUtils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ImageLightboxProps {
   image: ImageData;
@@ -10,6 +10,7 @@ interface ImageLightboxProps {
 }
 
 const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
+  const isMobile = useIsMobile();
   const [zoomLevel, setZoomLevel] = useState(1);
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -19,8 +20,8 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Get full resolution image for the lightbox
-  const fullSizeSrc = getFullImageUrl(image.src);
+  // Get full resolution image for the lightbox based on device
+  const fullSizeSrc = getFullImageUrl(image.src, isMobile);
 
   // Close on escape key
   useEffect(() => {
@@ -116,17 +117,19 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
           onMouseLeave={handleMouseUp}
           style={{ maxWidth: '90vw', maxHeight: '80vh' }}
         >
-          <img
-            src={fullSizeSrc}
-            alt={image.alt}
-            className={`max-w-full max-h-[80vh] object-contain transition-transform ${!isImageLoaded ? 'opacity-0' : 'opacity-100'}`}
-            style={{ 
-              transform: `scale(${zoomLevel}) translate(${position.x / zoomLevel}px, ${position.y / zoomLevel}px)`,
-              transformOrigin: 'center',
-              cursor: isDragging ? 'grabbing' : 'grab'
-            }}
-            onLoad={handleImageLoad}
-          />
+          <picture>
+            <img
+              src={fullSizeSrc}
+              alt={image.alt}
+              className={`max-w-full max-h-[80vh] object-contain transition-transform ${!isImageLoaded ? 'opacity-0' : 'opacity-100'}`}
+              style={{ 
+                transform: `scale(${zoomLevel}) translate(${position.x / zoomLevel}px, ${position.y / zoomLevel}px)`,
+                transformOrigin: 'center',
+                cursor: isDragging ? 'grabbing' : 'grab'
+              }}
+              onLoad={handleImageLoad}
+            />
+          </picture>
         </div>
         
         <div className="zoom-controls absolute right-4 bottom-4 flex space-x-2 bg-black bg-opacity-50 rounded-md p-1">
