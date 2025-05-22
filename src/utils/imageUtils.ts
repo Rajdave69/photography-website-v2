@@ -12,39 +12,33 @@ export const IMAGE_SIZES = {
 
 // Function to construct WebP image URL with correct size
 export const getSizedImageUrl = (imageUrl: string, size: string): string => {
-  // For actual implementation with local WebP images, you would:
-  // 1. Parse the original image path/name
-  // 2. Construct path to the correct sized version
-  // 3. Return the WebP version path
+  // Extract the base filename from the URL
+  // Parse the URL to get the filename without extension
+  const urlParts = imageUrl.split('/');
+  const filenameWithExtension = urlParts[urlParts.length - 1];
   
-  // Example URL transformation for a real implementation with local images:
-  // From: /images/photo-123.jpg
-  // To: /images/photo-123-medium.webp
-  
-  // For Unsplash images, we can use their API to get resized versions
-  if (imageUrl.includes('images.unsplash.com')) {
-    const baseUrl = imageUrl.split('?')[0];
-    const separator = '?';
-    
-    switch (size) {
-      case IMAGE_SIZES.THUMBNAIL:
-        return `${baseUrl}${separator}w=200&q=70&fm=webp&auto=format`;
-      case IMAGE_SIZES.SMALL:
-        return `${baseUrl}${separator}w=400&q=75&fm=webp&auto=format`;
-      case IMAGE_SIZES.MEDIUM:
-        return `${baseUrl}${separator}w=800&q=80&fm=webp&auto=format`;
-      case IMAGE_SIZES.LARGE:
-        return `${baseUrl}${separator}w=1200&q=85&fm=webp&auto=format`;
-      case IMAGE_SIZES.FULL:
-        return `${baseUrl}${separator}w=1800&q=90&fm=webp&auto=format`;
-      default:
-        return `${baseUrl}${separator}q=80&fm=webp&auto=format`;
-    }
+  // If it's already in our format, don't transform it again
+  if (filenameWithExtension.includes('-thumbnail.webp') ||
+      filenameWithExtension.includes('-small.webp') ||
+      filenameWithExtension.includes('-medium.webp') ||
+      filenameWithExtension.includes('-large.webp') ||
+      filenameWithExtension.includes('-full.webp')) {
+    return imageUrl;
   }
   
-  // For other image sources, return with the size appended (this is a placeholder)
-  // In a real implementation, you would have actual different sized WebP images
-  return imageUrl;
+  // Get the filename without extension (handles both .jpg, .png, etc.)
+  const filename = filenameWithExtension.split('.')[0];
+  
+  // For Unsplash or external images, we need to transform them to our local format
+  if (imageUrl.includes('images.unsplash.com')) {
+    // For Unsplash images, we'll extract the photo ID to use as our filename
+    const photoId = imageUrl.split('/').pop()?.split('?')[0] || filename;
+    return `https://rajtech.me/photography/images/${photoId}-${size}.webp`;
+  }
+  
+  // For local or other images that don't match our format yet,
+  // transform them to the expected format
+  return `https://rajtech.me/photography/images/${filename}-${size}.webp`;
 };
 
 // Function to get optimized image src based on screen width
