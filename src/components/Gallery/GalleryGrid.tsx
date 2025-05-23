@@ -6,6 +6,7 @@ import ImageLightbox from './ImageLightbox';
 import SortControls from './SortControls';
 import TagFilter from './TagFilter';
 import { sortImages, filterImagesByTag, getUniqueTags } from '@/utils/imageUtils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface GalleryGridProps {
   images: ImageData[];
@@ -17,6 +18,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ images }) => {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [filteredImages, setFilteredImages] = useState<ImageData[]>(images);
   const uniqueTags = getUniqueTags(images);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     // Apply filtering and sorting
@@ -24,6 +26,32 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ images }) => {
     result = sortImages(result, sortOption);
     setFilteredImages(result);
   }, [images, selectedTag, sortOption]);
+
+  // Function to distribute images across columns in a left-to-right order
+  // This ensures higher rated images appear in the leftmost columns
+  const distributeImagesForDesktop = (images: ImageData[]) => {
+    const columnCount = 4; // Desktop masonry grid has 4 columns
+    const columns: ImageData[][] = Array.from({ length: columnCount }, () => []);
+    
+    // Distribute images across columns in left-to-right order
+    images.forEach((image, index) => {
+      const columnIndex = index % columnCount;
+      columns[columnIndex].push(image);
+    });
+    
+    // Flatten the columns back into a single array
+    // This will give us the order: col1-img1, col2-img1, col3-img1, col4-img1, col1-img2, etc.
+    return columns.flat();
+  };
+
+  // Get the correctly ordered images based on view
+  const getOrderedImages = () => {
+    if (isMobile) {
+      return filteredImages;
+    } else {
+      return distributeImagesForDesktop(filteredImages);
+    }
+  };
 
   return (
     <div>
@@ -69,7 +97,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ images }) => {
         </div>
       ) : (sortOption !== 'category' || selectedTag) ? (
         <div className="masonry-grid">
-          {filteredImages.map((image) => (
+          {getOrderedImages().map((image) => (
             <div key={image.id} className="masonry-item">
               <GalleryImage
                 image={image}
