@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { ImageData, SortOption } from '@/types';
 import GalleryImage from './GalleryImage';
@@ -27,30 +26,20 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ images }) => {
     setFilteredImages(result);
   }, [images, selectedTag, sortOption]);
 
-  // Function to distribute images across columns in a left-to-right order
-  // This ensures higher rated images appear in the leftmost columns
-  const distributeImagesForDesktop = (images: ImageData[]) => {
-    const columnCount = 4; // Desktop masonry grid has 4 columns
-    const columns: ImageData[][] = Array.from({ length: columnCount }, () => []);
-    
-    // Distribute images across columns in left-to-right order
-    images.forEach((image, index) => {
-      const columnIndex = index % columnCount;
-      columns[columnIndex].push(image);
-    });
-    
-    // Flatten the columns back into a single array
-    // This will give us the order: col1-img1, col2-img1, col3-img1, col4-img1, col1-img2, etc.
-    return columns.flat();
-  };
-
-  // Get the correctly ordered images based on view
+  // For desktop view, we want to ensure that higher rated images are at the top of the masonry grid
+  // We'll render them in a simple order, which the CSS grid will arrange in rows
+  // This ensures that the highest rated images appear at the top of the page
+  // For mobile, we'll keep the original ordering
   const getOrderedImages = () => {
+    // For mobile, just return the filtered images
     if (isMobile) {
       return filteredImages;
-    } else {
-      return distributeImagesForDesktop(filteredImages);
     }
+    
+    // For desktop, we already have the images sorted by rating thanks to the sortImages function
+    // We just need to pass them directly to the grid, and the CSS grid will arrange them
+    // in rows, with the highest rated images at the top
+    return filteredImages;
   };
 
   return (
@@ -96,9 +85,9 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ images }) => {
           <p className="text-gallery-muted">No images found with the selected filters.</p>
         </div>
       ) : (sortOption !== 'category' || selectedTag) ? (
-        <div className="masonry-grid">
+        <div className={`${isMobile ? 'masonry-grid' : 'desktop-gallery-grid'}`}>
           {getOrderedImages().map((image) => (
-            <div key={image.id} className="masonry-item">
+            <div key={image.id} className={`${isMobile ? 'masonry-item' : 'desktop-gallery-item'}`}>
               <GalleryImage
                 image={image}
                 onClick={() => setSelectedImage(image)}

@@ -26,6 +26,37 @@ const Index = () => {
       </main>
       
       <Footer />
+      
+      <style jsx global>{`
+        /* Existing masonry grid styles remain for mobile */
+        
+        /* Desktop gallery grid - ensures images are displayed in rows from left to right */
+        .desktop-gallery-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          grid-gap: 16px;
+          grid-auto-flow: dense;
+        }
+        
+        .desktop-gallery-item {
+          position: relative;
+          overflow: hidden;
+          border-radius: 8px;
+          transition: transform 0.3s ease;
+        }
+        
+        .desktop-gallery-item:hover {
+          transform: translateY(-4px);
+        }
+        
+        /* Make images with higher aspect ratios span more columns */
+        .desktop-gallery-item img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+      `}</style>
     </div>
   );
 };
