@@ -16,8 +16,8 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ images }) => {
   const [sortOption, setSortOption] = useState<SortOption>('best');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [filteredImages, setFilteredImages] = useState<ImageData[]>(images);
-  const uniqueTags = getUniqueTags(images);
   const isMobile = useIsMobile();
+  const uniqueTags = getUniqueTags(images);
 
   useEffect(() => {
     // Apply filtering and sorting
@@ -25,22 +25,6 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ images }) => {
     result = sortImages(result, sortOption);
     setFilteredImages(result);
   }, [images, selectedTag, sortOption]);
-
-  // For desktop view, we want to ensure that higher rated images are at the top of the masonry grid
-  // We'll render them in a simple order, which the CSS grid will arrange in rows
-  // This ensures that the highest rated images appear at the top of the page
-  // For mobile, we'll keep the original ordering
-  const getOrderedImages = () => {
-    // For mobile, just return the filtered images
-    if (isMobile) {
-      return filteredImages;
-    }
-    
-    // For desktop, we already have the images sorted by rating thanks to the sortImages function
-    // We just need to pass them directly to the grid, and the CSS grid will arrange them
-    // in rows, with the highest rated images at the top
-    return filteredImages;
-  };
 
   return (
     <div>
@@ -85,16 +69,31 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ images }) => {
           <p className="text-gallery-muted">No images found with the selected filters.</p>
         </div>
       ) : (sortOption !== 'category' || selectedTag) ? (
-        <div className={`${isMobile ? 'masonry-grid' : 'desktop-gallery-grid'}`}>
-          {getOrderedImages().map((image) => (
-            <div key={image.id} className={`${isMobile ? 'masonry-item' : 'desktop-gallery-item'}`}>
-              <GalleryImage
-                image={image}
-                onClick={() => setSelectedImage(image)}
-              />
-            </div>
-          ))}
-        </div>
+        isMobile ? (
+          // Mobile view - keep the masonry layout
+          <div className="masonry-grid">
+            {filteredImages.map((image) => (
+              <div key={image.id} className="masonry-item">
+                <GalleryImage
+                  image={image}
+                  onClick={() => setSelectedImage(image)}
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          // Desktop view - use a grid layout with left-to-right ordering
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredImages.map((image) => (
+              <div key={image.id} className="gallery-item">
+                <GalleryImage
+                  image={image}
+                  onClick={() => setSelectedImage(image)}
+                />
+              </div>
+            ))}
+          </div>
+        )
       ) : null}
 
       {selectedImage && (
