@@ -41,7 +41,7 @@ export const images: ImageData[] = [
     height: 1080,
     tags: ['landscape', 'abstract'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 9
   },
   {
     id: '2',
@@ -51,7 +51,7 @@ export const images: ImageData[] = [
     height: 2250,
     tags: ['astro'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 9
   },
   {
     id: '3',
@@ -71,7 +71,7 @@ export const images: ImageData[] = [
     height: 3464,
     tags: ['astro'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 7
   },
   {
     id: '5',
@@ -101,7 +101,7 @@ export const images: ImageData[] = [
     height: 2360,
     tags: ['abstract'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8
   },
   {
     id: '8',
@@ -131,7 +131,7 @@ export const images: ImageData[] = [
     height: 4000,
     tags: ['birds'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8.5
   },
   {
     id: '11',
@@ -141,7 +141,7 @@ export const images: ImageData[] = [
     height: 4000,
     tags: ['birds'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8
   },
   {
     id: '12',
@@ -316,12 +316,12 @@ export const images: ImageData[] = [
   {
     id: '29',
     src: '81.webp',
-    alt: '81',
+    alt: 'Helicopter',
     width: 2048,
     height: 1536,
     tags: ['aviation'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8
   },
   {
     id: '30',
@@ -384,16 +384,6 @@ export const images: ImageData[] = [
     rating: 0
   },
   {
-    id: '36',
-    src: 'edited--4.webp',
-    alt: 'Edited--4',
-    width: 6000,
-    height: 4000,
-    tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
-    rating: 0
-  },
-  {
     id: '37',
     src: 'edited--5.webp',
     alt: 'Edited--5',
@@ -411,7 +401,7 @@ export const images: ImageData[] = [
     height: 4424,
     tags: ['wildlife'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8
   },
   {
     id: '39',
@@ -431,7 +421,7 @@ export const images: ImageData[] = [
     height: 4000,
     tags: ['wildlife'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8
   },
   {
     id: '41',
@@ -441,7 +431,7 @@ export const images: ImageData[] = [
     height: 4000,
     tags: ['wildlife'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8
   },
   {
     id: '42',
@@ -451,7 +441,7 @@ export const images: ImageData[] = [
     height: 3841,
     tags: ['wildlife'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8
   },
   {
     id: '43',
@@ -461,7 +451,7 @@ export const images: ImageData[] = [
     height: 4000,
     tags: ['wildlife'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8
   },
   {
     id: '44',
@@ -469,9 +459,9 @@ export const images: ImageData[] = [
     alt: 'Edited-0533',
     width: 5688,
     height: 4000,
-    tags: ['wildlife'],
+    tags: ['birds'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8
   },
   {
     id: '45',
@@ -661,7 +651,7 @@ export const images: ImageData[] = [
     height: 4000,
     tags: ['flowers', 'nature'],
     dateAdded: '2025-05-22',
-    rating: 8.5
+    rating: 8
   },
   {
     id: '64',
@@ -681,7 +671,7 @@ export const images: ImageData[] = [
     height: 4000,
     tags: ['flowers', 'nature'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 7
   },
   {
     id: '66',
@@ -701,7 +691,7 @@ export const images: ImageData[] = [
     height: 4000,
     tags: ['flowers', 'nature', 'macro'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8.5
   },
   {
     id: '68',
@@ -801,7 +791,7 @@ export const images: ImageData[] = [
     height: 4000,
     tags: ['flowers', 'nature'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 9
   },
   {
     id: '78',
@@ -811,7 +801,7 @@ export const images: ImageData[] = [
     height: 3271,
     tags: ['flowers', 'nature'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8
   },
   {
     id: '79',
@@ -841,7 +831,7 @@ export const images: ImageData[] = [
     height: 4000,
     tags: ['flowers', 'nature'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8.5
   },
   {
     id: '82',
@@ -901,7 +891,7 @@ export const images: ImageData[] = [
     height: 3919,
     tags: ['flowers', 'macro', 'nature'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8
   },
   {
     id: '88',
@@ -911,7 +901,7 @@ export const images: ImageData[] = [
     height: 3896,
     tags: ['flowers', 'macro', 'nature'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8.5
   },
   {
     id: '89',
@@ -921,7 +911,7 @@ export const images: ImageData[] = [
     height: 3919,
     tags: ['flowers', 'nature'],
     dateAdded: '2025-05-22',
-    rating: 9
+    rating: 9.25
   },
   {
     id: '90',
@@ -1071,7 +1061,7 @@ export const images: ImageData[] = [
     height: 4000,
     tags: ['pets', 'animals', 'portrait'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8.25
   },
   {
     id: '105',
@@ -1101,7 +1091,7 @@ export const images: ImageData[] = [
     height: 4000,
     tags: ['pets', 'animals', 'portrait'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8.5
   },
   {
     id: '108',
@@ -1111,7 +1101,7 @@ export const images: ImageData[] = [
     height: 4000,
     tags: ['pets', 'animals', 'portrait'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8.5
   },
   {
     id: '109',
@@ -1121,7 +1111,7 @@ export const images: ImageData[] = [
     height: 4000,
     tags: ['pets', 'animals', 'portrait'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8.5
   },
   {
     id: '110',
@@ -1131,7 +1121,7 @@ export const images: ImageData[] = [
     height: 4000,
     tags: ['pets', 'animals', 'portrait'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 8.5
   },
   {
     id: '111',
@@ -1141,7 +1131,7 @@ export const images: ImageData[] = [
     height: 2894,
     tags: ['astro'],
     dateAdded: '2025-05-22',
-    rating: 9
+    rating: 9.5
   },
   {
     id: '112',
@@ -1151,6 +1141,16 @@ export const images: ImageData[] = [
     height: 4000,
     tags: ['nature'],
     dateAdded: '2025-05-22',
-    rating: 0
+    rating: 7.5
+  },
+  {
+    id: '113',
+    src: '90.webp',
+    alt: '90',
+    width: 6000,
+    height: 4000,
+    tags: ['people', 'portrait'],
+    dateAdded: '2025-05-22',
+    rating: 8
   },
 ];
