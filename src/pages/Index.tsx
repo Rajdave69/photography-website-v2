@@ -3,7 +3,7 @@ import React from 'react';
 import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
 import GalleryGrid from '@/components/Gallery/GalleryGrid';
-import { images } from '@/data/images';
+import { imagesGenerated as images } from '@/data/images.generated';
 import { Camera } from 'lucide-react';
 
 const Index = () => {

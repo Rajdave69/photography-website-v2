@@ -1,73 +1,87 @@
-# Welcome to your Lovable project
+# Photography Gallery with Prebuild Pipeline
 
-## Project info
+This project includes an automated prebuild pipeline that processes source images and generates optimized WebP variants with EXIF metadata extraction.
 
-**URL**: https://lovable.dev/projects/a3832f83-9772-4073-8e6e-5b6d51cd268f
+## How It Works
 
-## How can I edit this code?
+### 1. Source Images
+- Place your original `.jpg`, `.jpeg`, or `.png` files in `/assets/pictures/`
+- Maintain your image metadata in `src/data/images.ts` (this file is never modified by the build process)
 
-There are several ways of editing your application.
+### 2. Prebuild Pipeline
+The prebuild script automatically:
+- Reads your source data from `src/data/images.ts`
+- Matches images to source files in `/assets/pictures/`
+- Generates WebP variants in 5 sizes: full, large (2048px), medium (1280px), small (800px), thumbnail (400px)
+- Extracts EXIF metadata (camera, lens, settings)
+- Creates optimized data file at `src/data/images.generated.ts`
 
-**Use Lovable**
+### 3. Build Process
+```bash
+npm run build
+```
+This runs:
+1. `npm run prebuild` - Processes images and generates data
+2. `vite build` - Builds the application
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/a3832f83-9772-4073-8e6e-5b6d51cd268f) and start prompting.
+## Setup Instructions
 
-Changes made via Lovable will be committed automatically to this repo.
+1. **Install dependencies:**
+```bash
+npm install
+```
 
-**Use your preferred IDE**
+2. **Add your source images:**
+- Create the `/assets/pictures/` directory
+- Add your high-quality source images (.jpg, .jpeg, .png)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+3. **Update your image data:**
+- Edit `src/data/images.ts` with your image metadata
+- Include: alt text, rating (0-10), tags, dateAdded
+- Optionally include sourceFile field to help matching
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+4. **Run the build:**
+```bash
+npm run build
+```
 
-Follow these steps:
+## File Structure
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+```
+/assets/pictures/          # Your source images (not committed)
+/public/generated/         # Generated WebP files (auto-created)
+/src/data/images.ts        # Your editable image metadata
+/src/data/images.generated.ts  # Auto-generated optimized data
+/scripts/prebuild.js       # The prebuild pipeline script
+```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## Image Matching Rules
 
-# Step 3: Install the necessary dependencies.
-npm i
+The prebuild script matches your metadata to source files using:
+1. `sourceFile` field (if specified)
+2. `src` field filename
+3. `alt` field text matching
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+## Generated Features
+
+- **Responsive Images**: Automatic srcSet generation for optimal loading
+- **EXIF Data**: Camera model, lens, exposure settings extracted automatically
+- **Performance**: WebP format with quality 82 for optimal file sizes
+- **Progressive Enhancement**: Falls back gracefully if files are missing
+
+## Development
+
+For development with hot reloading:
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The generated data file includes placeholder data until you run the prebuild process.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+## Original Lovable Project Info
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+**URL**: https://lovable.dev/projects/a3832f83-9772-4073-8e6e-5b6d51cd268f
 
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/a3832f83-9772-4073-8e6e-5b6d51cd268f) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+This project was created with Lovable and enhanced with a custom prebuild pipeline for optimal image processing.

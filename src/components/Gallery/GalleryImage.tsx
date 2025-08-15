@@ -11,19 +11,21 @@ interface GalleryImageProps {
 
 const GalleryImage: React.FC<GalleryImageProps> = ({ image, onClick }) => {
   const isMobile = useIsMobile();
-  // Get optimized preview version of the image for the grid based on device
-  const previewSrc = getPreviewImageUrl(image.src, isMobile);
   
   return (
     <div className="gallery-image-container animate-fade-in" onClick={onClick}>
       <picture>
         <img
-          src={previewSrc}
+          src={image.src}
           alt={image.alt}
           className="gallery-image"
           loading="lazy"
-          width={image.width}
-          height={image.height}
+          srcSet={image.files ? `
+            ${image.files.small} 800w,
+            ${image.files.medium} 1280w,
+            ${image.files.large} 2048w
+          ` : undefined}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
         />
       </picture>
       <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">

@@ -1,5 +1,5 @@
 
-import { ImageData } from '../types';
+import { SourceImageData } from '../types';
 
 export const tags = [
   // SUBJECTS
@@ -32,7 +32,7 @@ export const tags = [
   'blackandwhite'
 ];
 
-export const images: ImageData[] = [
+export const images: SourceImageData[] = [
   {
     id: '1',
     src: '102.webp',
