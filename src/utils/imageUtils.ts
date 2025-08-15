@@ -68,7 +68,15 @@ export const getFullImageUrl = (imageUrl: string, isMobile = false): string => {
 export const sortImages = (images: ImageData[], sortOption: SortOption): ImageData[] => {
   switch (sortOption) {
     case 'best':
-      return [...images].sort((a, b) => b.rating - a.rating);
+      return [...images].sort((a, b) => {
+        // Primary sort by rating (descending)
+        const ratingDiff = b.rating - a.rating;
+        // If ratings are equal, sort alphabetically by alt text
+        if (ratingDiff === 0) {
+          return a.alt.localeCompare(b.alt);
+        }
+        return ratingDiff;
+      });
     case 'new':
       return [...images].sort((a, b) => 
         new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
@@ -108,3 +116,18 @@ export const groupImagesByTag = (images: ImageData[]): Record<string, ImageData[
   
   return result;
 };
+
+// Utility: transpose the array so CSS columns (which render top→bottom per column)
+// display our items left→right by rows.
+export function reorderForCssColumns<T>(items: T[], cols: number): T[] {
+  if (cols <= 1) return items;
+  const rows = Math.ceil(items.length / cols);
+  const out: T[] = [];
+  for (let c = 0; c < cols; c++) {
+    for (let r = 0; r < rows; r++) {
+      const idx = r * cols + c; // row-major index
+      if (idx < items.length) out.push(items[idx]); // push in column-major order
+    }
+  }
+  return out;
+}
