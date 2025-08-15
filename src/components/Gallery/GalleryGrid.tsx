@@ -1,11 +1,12 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { ImageData, SortOption } from '@/types';
 import GalleryImage from './GalleryImage';
 import ImageLightbox from './ImageLightbox';
 import SortControls from './SortControls';
 import TagFilter from './TagFilter';
-import { sortImages, filterImagesByTag, getUniqueTags } from '@/utils/imageUtils';
+import { sortImages, filterImagesByTag, getUniqueTags, reorderForCssColumns } from '@/utils/imageUtils';
+import { useColumnsCount } from '@/hooks/useColumnsCount';
 
 interface GalleryGridProps {
   images: ImageData[];
@@ -15,15 +16,20 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ images }) => {
   const [selectedImage, setSelectedImage] = useState<ImageData | null>(null);
   const [sortOption, setSortOption] = useState<SortOption>('best');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
-  const [filteredImages, setFilteredImages] = useState<ImageData[]>(images);
   const uniqueTags = getUniqueTags(images);
+  const columns = useColumnsCount();
 
-  useEffect(() => {
-    // Apply filtering and sorting
+  // 1) Apply filtering and sorting
+  const filteredAndSorted = useMemo(() => {
     let result = filterImagesByTag(images, selectedTag);
     result = sortImages(result, sortOption);
-    setFilteredImages(result);
+    return result;
   }, [images, selectedTag, sortOption]);
+
+  // 2) Reorder for CSS columns so top-rated items distribute across top row
+  const orderedImages = useMemo(() => {
+    return reorderForCssColumns(filteredAndSorted, columns);
+  }, [filteredAndSorted, columns]);
 
   return (
     <div>
@@ -63,13 +69,13 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ images }) => {
         )}
       </div>
 
-      {(sortOption !== 'category' || selectedTag) && filteredImages.length === 0 ? (
+      {(sortOption !== 'category' || selectedTag) && orderedImages.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-gallery-muted">No images found with the selected filters.</p>
         </div>
       ) : (sortOption !== 'category' || selectedTag) ? (
         <div className="masonry-grid">
-          {filteredImages.map((image) => (
+          {orderedImages.map((image) => (
             <div key={image.id} className="masonry-item">
               <GalleryImage
                 image={image}

@@ -116,3 +116,18 @@ export const groupImagesByTag = (images: ImageData[]): Record<string, ImageData[
   
   return result;
 };
+
+// Utility: transpose the array so CSS columns (which render top→bottom per column)
+// display our items left→right by rows.
+export function reorderForCssColumns<T>(items: T[], cols: number): T[] {
+  if (cols <= 1) return items;
+  const rows = Math.ceil(items.length / cols);
+  const out: T[] = [];
+  for (let c = 0; c < cols; c++) {
+    for (let r = 0; r < rows; r++) {
+      const idx = r * cols + c; // row-major index
+      if (idx < items.length) out.push(items[idx]); // push in column-major order
+    }
+  }
+  return out;
+}
