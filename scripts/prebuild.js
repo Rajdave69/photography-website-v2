@@ -13,6 +13,7 @@ const rootDir = join(__dirname, '..');
 const ASSETS_DIR = join(rootDir, 'assets', 'pictures');
 const OUTPUT_DIR = join(rootDir, 'public', 'generated');
 const GENERATED_FILE = join(rootDir, 'src', 'data', 'images.generated.ts');
+const SOURCE_FILE = join(rootDir, 'src', 'data', 'images.ts');
 const MANIFEST_FILE = join(OUTPUT_DIR, 'manifest.json');
 const CACHE_FILE = join(OUTPUT_DIR, '.cache.json');
 const SAMPLE_IMAGES_FILE = join(rootDir, 'src', 'data', 'sample-images.js');
@@ -25,7 +26,7 @@ const SIZES = {
   thumbnail: 400
 };
 
-const WEBP_QUALITY = 82;
+const WEBP_QUALITY = 100;
 
 async function main() {
   console.log('🚀 Starting prebuild pipeline...');
@@ -36,15 +37,24 @@ async function main() {
     return;
   }
 
+  // Read source data first to check if content would actually change
+  const { images: sourceImages, tags } = await loadSourceData();
+  console.log(`📖 Found ${sourceImages.length} images in source data`);
+
+  // Early content check - simulate processing without doing expensive operations
+  const processedImagesPreview = await simulateImageProcessing(sourceImages);
+  const wouldChange = await wouldContentChange(processedImagesPreview, tags);
+
+  if (!wouldChange) {
+    console.log('⏭️  Generated content would be identical, skipping processing');
+    return;
+  }
+
   // Clean and create output directory
   if (existsSync(OUTPUT_DIR)) {
     rmSync(OUTPUT_DIR, { recursive: true });
   }
   mkdirSync(OUTPUT_DIR, { recursive: true });
-
-  // Read source data
-  const { images: sourceImages, tags } = await loadSourceData();
-  console.log(`📖 Found ${sourceImages.length} images in source data`);
 
   // Check if we have sharp available for image processing
   let sharp = null;
@@ -140,15 +150,15 @@ async function main() {
   }
 
   // Generate TypeScript file
-  await generateTypeScriptFile(processedImages, tags);
-  
+  const fileChanged = await generateTypeScriptFile(processedImages, tags);
+
   // Generate JSON manifest
   await generateManifest(processedImages, tags);
 
   // Update cache with current hash
   updateCache();
 
-  console.log(`✨ Prebuild complete! Generated ${processedImages.length} processed images`);
+  console.log(`✨ Prebuild complete! Generated ${processedImages.length} processed images${fileChanged ? '' : ' (no file changes)'}`);
 }
 
 async function loadSourceData() {
@@ -354,8 +364,18 @@ export const tagsGenerated = ${JSON.stringify(tags, null, 2)};
 export const imagesGenerated: ImageData[] = ${JSON.stringify(images, null, 2)};
 `;
 
+  // Check if the content would actually change
+  if (existsSync(GENERATED_FILE)) {
+    const existingContent = readFileSync(GENERATED_FILE, 'utf8');
+    if (existingContent === content) {
+      console.log('📝 Generated TypeScript content unchanged, skipping write');
+      return false; // No changes made
+    }
+  }
+
   writeFileSync(GENERATED_FILE, content, 'utf8');
   console.log(`📝 Generated TypeScript file: ${GENERATED_FILE}`);
+  return true; // Changes made
 }
 
 async function generateManifest(images, tags) {
@@ -371,15 +391,18 @@ async function generateManifest(images, tags) {
 
 function shouldProcessImages() {
   try {
-    // Check if sample-images.js exists
-    if (!existsSync(SAMPLE_IMAGES_FILE)) {
-      console.log('📝 sample-images.js not found, processing images');
+    // Check if source images.ts exists
+    if (!existsSync(SOURCE_FILE)) {
+      console.log('📝 images.ts not found, processing images');
       return true;
     }
 
-    // Generate hash of sample-images.js content
-    const currentContent = readFileSync(SAMPLE_IMAGES_FILE, 'utf8');
-    const currentHash = createHash('md5').update(currentContent).digest('hex');
+    // Generate hash of images.ts content
+    const currentSourceContent = readFileSync(SOURCE_FILE, 'utf8');
+    const currentSourceHash = createHash('md5').update(currentSourceContent).digest('hex');
+
+    // Generate hash of assets directory (file names and modification times)
+    const assetsHash = generateAssetsHash();
 
     // Check if cache file exists
     if (!existsSync(CACHE_FILE)) {
@@ -387,16 +410,28 @@ function shouldProcessImages() {
       return true;
     }
 
-    // Read previous hash from cache
-    const cache = JSON.parse(readFileSync(CACHE_FILE, 'utf8'));
-    const previousHash = cache.sampleImagesHash;
-
-    if (currentHash !== previousHash) {
-      console.log('📝 Changes detected in sample-images.js, processing images');
+    // Check if generated file exists
+    if (!existsSync(GENERATED_FILE)) {
+      console.log('📝 Generated file not found, processing images');
       return true;
     }
 
-    console.log('📝 No changes in sample-images.js');
+    // Read previous hashes from cache
+    const cache = JSON.parse(readFileSync(CACHE_FILE, 'utf8'));
+    const previousSourceHash = cache.sourceHash;
+    const previousAssetsHash = cache.assetsHash;
+
+    if (currentSourceHash !== previousSourceHash) {
+      console.log('📝 Changes detected in images.ts, processing images');
+      return true;
+    }
+
+    if (assetsHash !== previousAssetsHash) {
+      console.log('📝 Changes detected in assets directory, processing images');
+      return true;
+    }
+
+    console.log('📝 No changes detected, skipping processing');
     return false;
   } catch (error) {
     console.warn('⚠️  Error checking for changes, will process images:', error.message);
@@ -404,13 +439,38 @@ function shouldProcessImages() {
   }
 }
 
+function generateAssetsHash() {
+  try {
+    if (!existsSync(ASSETS_DIR)) {
+      return '';
+    }
+
+    const files = readdirSync(ASSETS_DIR)
+      .filter(file => /\.(jpg|jpeg|png)$/i.test(file))
+      .map(file => {
+        const filePath = join(ASSETS_DIR, file);
+        const stats = statSync(filePath);
+        return `${file}:${stats.mtime.getTime()}:${stats.size}`;
+      })
+      .sort()
+      .join('|');
+
+    return createHash('md5').update(files).digest('hex');
+  } catch (error) {
+    console.warn('⚠️  Error generating assets hash:', error.message);
+    return '';
+  }
+}
+
 function updateCache() {
   try {
-    const currentContent = readFileSync(SAMPLE_IMAGES_FILE, 'utf8');
-    const currentHash = createHash('md5').update(currentContent).digest('hex');
-    
+    const currentSourceContent = readFileSync(SOURCE_FILE, 'utf8');
+    const currentSourceHash = createHash('md5').update(currentSourceContent).digest('hex');
+    const assetsHash = generateAssetsHash();
+
     const cache = {
-      sampleImagesHash: currentHash,
+      sourceHash: currentSourceHash,
+      assetsHash: assetsHash,
       lastUpdated: new Date().toISOString()
     };
     
@@ -419,6 +479,64 @@ function updateCache() {
   } catch (error) {
     console.warn('⚠️  Failed to update cache:', error.message);
   }
+}
+
+async function simulateImageProcessing(sourceImages) {
+  // Find source files
+  const sourceFiles = findSourceFiles();
+
+  // Match images to source files
+  const matchedImages = matchImagesToSources(sourceImages, sourceFiles);
+
+  // Sort by rating (desc) then by source filename (asc)
+  matchedImages.sort((a, b) => {
+    const ratingDiff = b.rating - a.rating;
+    if (ratingDiff === 0) {
+      return (a.sourceFile || a.src).localeCompare(b.sourceFile || b.src);
+    }
+    return ratingDiff;
+  });
+
+  // Simulate processing without expensive operations
+  const processedImages = [];
+  for (let i = 0; i < matchedImages.length; i++) {
+    const image = matchedImages[i];
+    const id = (i + 1).toString();
+
+    // Create simulated processed image object
+    processedImages.push({
+      id,
+      src: `/generated/${id}-medium.webp`,
+      alt: image.alt,
+      width: image.width,
+      height: image.height,
+      tags: image.tags,
+      dateAdded: image.dateAdded,
+      rating: image.rating,
+      files: generatePlaceholderFiles(id),
+      sourceFile: image.sourceFile || null
+    });
+  }
+
+  return processedImages;
+}
+
+async function wouldContentChange(processedImages, tags) {
+  const content = `// This file is auto-generated by the prebuild script. Do not edit manually.
+
+import { ImageData } from '../types';
+
+export const tagsGenerated = ${JSON.stringify(tags, null, 2)};
+
+export const imagesGenerated: ImageData[] = ${JSON.stringify(processedImages, null, 2)};
+`;
+
+  if (existsSync(GENERATED_FILE)) {
+    const existingContent = readFileSync(GENERATED_FILE, 'utf8');
+    return existingContent !== content;
+  }
+
+  return true; // File doesn't exist, so it would change
 }
 
 // Run the script
