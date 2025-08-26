@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { X, ZoomIn, ZoomOut, Tag as TagIcon, Calendar, Star } from 'lucide-react';
+import { X, ZoomIn, ZoomOut, Tag as TagIcon, Calendar, Star, Camera, Aperture, Timer, Zap } from 'lucide-react';
 import { ImageData } from '@/types';
 import { getFullImageUrl } from '@/utils/imageUtils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -150,19 +150,63 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
         </div>
         
         <div 
-          className={`absolute bottom-4 left-4 bg-black bg-opacity-70 rounded p-2 text-white text-sm space-y-1 transition-opacity duration-300 ${isDetailsHovered ? 'opacity-100' : 'opacity-50'}`}
+          className={`absolute bottom-4 left-4 bg-black bg-opacity-70 rounded p-3 text-white text-sm space-y-2 transition-all duration-300 ${isDetailsHovered ? 'opacity-100' : 'opacity-20'} hover:opacity-100`}
           onMouseEnter={() => setIsDetailsHovered(true)}
           onMouseLeave={() => setIsDetailsHovered(false)}
         >
-          <div className="text-sm font-medium mb-1">{image.alt}</div>
-          <div className="flex items-center text-xs opacity-80">
+          <div className="flex items-center text-xs opacity-90">
             <Calendar className="h-3 w-3 mr-1" />
             <span>{new Date(image.dateAdded).toLocaleDateString()}</span>
             <span className="mx-2">•</span>
             <Star className="h-3 w-3 mr-1" />
             <span>{image.rating}/10</span>
           </div>
-          <div className="flex flex-wrap items-center text-xs mt-1">
+
+          {/* Camera Details */}
+          {(image.cameraModel || image.lensModel || image.fStop || image.exposureTime || image.iso || image.focalLength) && (
+            <div className="space-y-1 border-t border-white border-opacity-20 pt-2">
+              {image.cameraModel && (
+                <div className="flex items-center text-xs opacity-80">
+                  <Camera className="h-3 w-3 mr-1" />
+                  <span>{image.cameraModel}</span>
+                </div>
+              )}
+              {image.lensModel && (
+                <div className="flex items-center text-xs opacity-80">
+                  <span className="text-xs mr-1">🔍</span>
+                  <span>{image.lensModel}</span>
+                </div>
+              )}
+              <div className="flex items-center space-x-3 text-xs opacity-80">
+                {image.fStop && (
+                  <div className="flex items-center">
+                    <Aperture className="h-3 w-3 mr-1" />
+                    <span>{image.fStop}</span>
+                  </div>
+                )}
+                {image.exposureTime && (
+                  <div className="flex items-center">
+                    <Timer className="h-3 w-3 mr-1" />
+                    <span>{image.exposureTime}</span>
+                  </div>
+                )}
+                {image.iso && (
+                  <div className="flex items-center">
+                    <Zap className="h-3 w-3 mr-1" />
+                    <span>ISO {image.iso}</span>
+                  </div>
+                )}
+              </div>
+              {image.focalLength && (
+                <div className="flex items-center text-xs opacity-80">
+                  <span className="text-xs mr-1">📏</span>
+                  <span>{image.focalLength}</span>
+                </div>
+              )}
+            </div>
+          )}
+
+          <div className="flex flex-wrap items-center text-xs border-t border-white border-opacity-20 pt-2">
             <TagIcon className="h-3 w-3 mr-1" />
             {image.tags.map((tag) => (
               <span key={tag} className="mr-2">#{tag}</span>
