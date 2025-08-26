@@ -26,3 +26,11 @@ dist-ssr
 public/pictures/
 
 public/pictures_jpg/
+
+assets/pictures/
+
+public/generated/
+
+package-lock.json
+
+src/data/images.generated.ts
