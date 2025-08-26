@@ -15,6 +15,7 @@ const prebuildPlugin = () => ({
         stdio: 'inherit',
         cwd: process.cwd()
       });
+      console.log('✅ Prebuild completed successfully');
     } catch (error) {
       console.warn('⚠️ Prebuild failed:', error instanceof Error ? error.message : String(error));
     }
