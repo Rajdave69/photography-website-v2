@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
-import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, rmSync } from 'fs';
+import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, rmSync, statSync } from 'fs';
 import { join, dirname, extname, basename } from 'path';
 import { fileURLToPath } from 'url';
+import { createHash } from 'crypto';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -13,6 +14,8 @@ const ASSETS_DIR = join(rootDir, 'assets', 'pictures');
 const OUTPUT_DIR = join(rootDir, 'public', 'generated');
 const GENERATED_FILE = join(rootDir, 'src', 'data', 'images.generated.ts');
 const MANIFEST_FILE = join(OUTPUT_DIR, 'manifest.json');
+const CACHE_FILE = join(OUTPUT_DIR, '.cache.json');
+const SAMPLE_IMAGES_FILE = join(rootDir, 'src', 'data', 'sample-images.js');
 
 const SIZES = {
   full: null, // Original size
@@ -26,6 +29,12 @@ const WEBP_QUALITY = 82;
 
 async function main() {
   console.log('🚀 Starting prebuild pipeline...');
+
+  // Check if processing is needed
+  if (!shouldProcessImages()) {
+    console.log('⏭️  No changes detected, skipping image processing');
+    return;
+  }
 
   // Clean and create output directory
   if (existsSync(OUTPUT_DIR)) {
@@ -78,9 +87,15 @@ async function main() {
       let files = {};
       let exifData = {};
       
+      let width = image.width;
+      let height = image.height;
+      
       if (sharp && image.sourceFile && existsSync(join(ASSETS_DIR, image.sourceFile))) {
-        // Generate WebP variants
-        files = await generateWebPVariants(image.sourceFile, id, sharp);
+        // Generate WebP variants and get dimensions
+        const result = await generateWebPVariants(image.sourceFile, id, sharp);
+        files = result.files;
+        width = result.width;
+        height = result.height;
         
         // Extract EXIF data
         if (exifr) {
@@ -96,6 +111,8 @@ async function main() {
         id,
         src: files.medium || image.src, // Default to medium variant or original
         alt: image.alt,
+        width,
+        height,
         tags: image.tags,
         dateAdded: image.dateAdded,
         rating: image.rating,
@@ -111,6 +128,8 @@ async function main() {
         id,
         src: image.src,
         alt: image.alt,
+        width: image.width,
+        height: image.height,
         tags: image.tags,
         dateAdded: image.dateAdded,
         rating: image.rating,
@@ -125,6 +144,9 @@ async function main() {
   
   // Generate JSON manifest
   await generateManifest(processedImages, tags);
+
+  // Update cache with current hash
+  updateCache();
 
   console.log(`✨ Prebuild complete! Generated ${processedImages.length} processed images`);
 }
@@ -250,6 +272,10 @@ async function generateWebPVariants(sourceFileName, id, sharp) {
   try {
     const image = sharp(sourcePath);
     const metadata = await image.metadata();
+    
+    // Store original dimensions for later use
+    const originalWidth = metadata.width;
+    const originalHeight = metadata.height;
 
     for (const [sizeName, maxWidth] of Object.entries(SIZES)) {
       const outputPath = join(OUTPUT_DIR, `${id}-${sizeName}.webp`);
@@ -269,12 +295,13 @@ async function generateWebPVariants(sourceFileName, id, sharp) {
       
       files[sizeName] = `/generated/${id}-${sizeName}.webp`;
     }
+    
+    // Return files object with original dimensions
+    return { files, width: originalWidth, height: originalHeight };
   } catch (error) {
     console.error(`❌ Failed to generate WebP variants for ${sourceFileName}:`, error.message);
     throw error;
   }
-
-  return files;
 }
 
 function generatePlaceholderFiles(id) {
@@ -340,6 +367,58 @@ async function generateManifest(images, tags) {
 
   writeFileSync(MANIFEST_FILE, JSON.stringify(manifest, null, 2), 'utf8');
   console.log(`📝 Generated manifest file: ${MANIFEST_FILE}`);
+}
+
+function shouldProcessImages() {
+  try {
+    // Check if sample-images.js exists
+    if (!existsSync(SAMPLE_IMAGES_FILE)) {
+      console.log('📝 sample-images.js not found, processing images');
+      return true;
+    }
+
+    // Generate hash of sample-images.js content
+    const currentContent = readFileSync(SAMPLE_IMAGES_FILE, 'utf8');
+    const currentHash = createHash('md5').update(currentContent).digest('hex');
+
+    // Check if cache file exists
+    if (!existsSync(CACHE_FILE)) {
+      console.log('📝 No cache found, processing images');
+      return true;
+    }
+
+    // Read previous hash from cache
+    const cache = JSON.parse(readFileSync(CACHE_FILE, 'utf8'));
+    const previousHash = cache.sampleImagesHash;
+
+    if (currentHash !== previousHash) {
+      console.log('📝 Changes detected in sample-images.js, processing images');
+      return true;
+    }
+
+    console.log('📝 No changes in sample-images.js');
+    return false;
+  } catch (error) {
+    console.warn('⚠️  Error checking for changes, will process images:', error.message);
+    return true;
+  }
+}
+
+function updateCache() {
+  try {
+    const currentContent = readFileSync(SAMPLE_IMAGES_FILE, 'utf8');
+    const currentHash = createHash('md5').update(currentContent).digest('hex');
+    
+    const cache = {
+      sampleImagesHash: currentHash,
+      lastUpdated: new Date().toISOString()
+    };
+    
+    writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2), 'utf8');
+    console.log('📝 Cache updated');
+  } catch (error) {
+    console.warn('⚠️  Failed to update cache:', error.message);
+  }
 }
 
 // Run the script
