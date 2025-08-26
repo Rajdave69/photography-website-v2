@@ -136,7 +136,7 @@ async function loadSourceData() {
     
     // Try loading JS version first
     try {
-      const jsPath = join(rootDir, 'src', 'data', 'sample-images.js');
+      const jsPath = join(rootDir, 'src', 'data', 'images.ts');
       if (existsSync(jsPath)) {
         const sourceModule = await import(`file://${jsPath}`);
         sourceData = {
