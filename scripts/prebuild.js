@@ -332,8 +332,25 @@ async function extractExifData(sourceFileName, exifr) {
 
     if (!exif) return {};
 
+    // Function to clean up camera model name by removing duplicate manufacturer names
+    const cleanCameraModel = (make, model) => {
+      if (!make || !model) return model;
+
+      const makeTrimmed = make.trim();
+      const modelTrimmed = model.trim();
+
+      // Check if model starts with the make name (case insensitive) followed by space
+      if (modelTrimmed.toLowerCase().startsWith(makeTrimmed.toLowerCase() + ' ')) {
+        // Return the model as-is since it already includes the manufacturer
+        return modelTrimmed;
+      }
+
+      // If model doesn't start with make name, combine them
+      return `${makeTrimmed} ${modelTrimmed}`;
+    };
+
     return {
-      cameraModel: exif.Make && exif.Model ? `${exif.Make} ${exif.Model}` : exif.Model,
+      cameraModel: exif.Make && exif.Model ? cleanCameraModel(exif.Make, exif.Model) : exif.Model,
       fStop: exif.FNumber ? `f/${exif.FNumber}` : undefined,
       exposureTime: exif.ExposureTime ? formatExposureTime(exif.ExposureTime) : undefined,
       iso: exif.ISO,
