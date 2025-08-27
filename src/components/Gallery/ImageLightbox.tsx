@@ -201,7 +201,7 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
             >
               <div className="flex items-center text-xs opacity-90 mb-2">
                 <Calendar className="h-3 w-3 mr-1 flex-shrink-0" />
-                <span>{new Date(image.dateAdded).toLocaleDateString()}</span>
+                <span>{image.dateTaken ? new Date(image.dateTaken).toLocaleDateString() : 'Date unknown'}</span>
                 <span className="mx-2">•</span>
                 <Star className="h-3 w-3 mr-1 flex-shrink-0" />
                 <span>{image.rating}/10</span>
@@ -327,7 +327,7 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({ image, onClose }) => {
           <div className="w-full max-w-[90vw] mt-4 bg-black bg-opacity-90 rounded-lg p-4 text-white text-sm space-y-3 transition-all duration-300 animate-in slide-in-from-bottom-2">
             <div className="flex items-center justify-center text-xs opacity-90 mb-2">
               <Calendar className="h-3 w-3 mr-1" />
-              <span>{new Date(image.dateAdded).toLocaleDateString()}</span>
+              <span>{image.dateTaken ? new Date(image.dateTaken).toLocaleDateString() : 'Date unknown'}</span>
               <span className="mx-2">•</span>
               <Star className="h-3 w-3 mr-1" />
               <span>{image.rating}/10</span>

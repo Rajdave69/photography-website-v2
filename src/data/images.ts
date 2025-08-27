@@ -40,7 +40,6 @@ export const images: SourceImageData[] = [
     width: 1920,
     height: 1080,
     tags: ['landscape', 'abstract'],
-    dateAdded: '2025-05-22',
     rating: 9
   },
   {
@@ -50,7 +49,6 @@ export const images: SourceImageData[] = [
     width: 3500,
     height: 2250,
     tags: ['astro'],
-    dateAdded: '2025-05-22',
     rating: 9
   },
   {
@@ -60,7 +58,6 @@ export const images: SourceImageData[] = [
     width: 4000,
     height: 6000,
     tags: ['astro'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -70,7 +67,6 @@ export const images: SourceImageData[] = [
     width: 5202,
     height: 3464,
     tags: ['astro'],
-    dateAdded: '2025-05-22',
     rating: 7
   },
   {
@@ -80,7 +76,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['nature', 'abstract'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -90,7 +85,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['abstract'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -100,7 +94,6 @@ export const images: SourceImageData[] = [
     width: 1329,
     height: 2360,
     tags: ['abstract'],
-    dateAdded: '2025-05-22',
     rating: 8
   },
   {
@@ -110,7 +103,6 @@ export const images: SourceImageData[] = [
     width: 2048,
     height: 1536,
     tags: ['nature', 'flower'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -120,7 +112,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['birds'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -130,7 +121,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['birds'],
-    dateAdded: '2025-05-22',
     rating: 8.5
   },
   {
@@ -140,7 +130,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['birds'],
-    dateAdded: '2025-05-22',
     rating: 8
   },
   {
@@ -150,7 +139,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['birds'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -160,7 +148,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['architecture'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -170,7 +157,6 @@ export const images: SourceImageData[] = [
     width: 2360,
     height: 1329,
     tags: ['abstract'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -180,7 +166,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -190,7 +175,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['pets', 'animals'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -200,7 +184,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['pets', 'animals'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -210,7 +193,6 @@ export const images: SourceImageData[] = [
     width: 2048,
     height: 1536,
     tags: ['flowers', 'macro'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -220,7 +202,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['abstract'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -230,7 +211,6 @@ export const images: SourceImageData[] = [
     width: 4000,
     height: 6000,
     tags: ['abstract'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -240,7 +220,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['birds', 'animals'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -250,7 +229,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['pets', 'animals'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -260,7 +238,6 @@ export const images: SourceImageData[] = [
     width: 5328,
     height: 4000,
     tags: ['animals'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -270,7 +247,6 @@ export const images: SourceImageData[] = [
     width: 2048,
     height: 1536,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -280,7 +256,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['abstract'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -290,7 +265,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['birds', 'animals'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -300,7 +274,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['nature', 'abstract'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -310,7 +283,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['abstract'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -320,7 +292,6 @@ export const images: SourceImageData[] = [
     width: 2048,
     height: 1536,
     tags: ['aviation'],
-    dateAdded: '2025-05-22',
     rating: 8
   },
   {
@@ -330,7 +301,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['pets', 'animals'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -340,7 +310,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -350,7 +319,6 @@ export const images: SourceImageData[] = [
     width: 4000,
     height: 4000,
     tags: ['pets', 'animals'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -360,7 +328,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['nature', 'abstract'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -370,7 +337,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -380,7 +346,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -390,7 +355,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['nature'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -400,7 +364,6 @@ export const images: SourceImageData[] = [
     width: 6401,
     height: 4424,
     tags: ['wildlife'],
-    dateAdded: '2025-05-22',
     rating: 8
   },
   {
@@ -410,7 +373,6 @@ export const images: SourceImageData[] = [
     width: 5642,
     height: 3457,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -420,7 +382,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['wildlife'],
-    dateAdded: '2025-05-22',
     rating: 8
   },
   {
@@ -430,7 +391,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['wildlife'],
-    dateAdded: '2025-05-22',
     rating: 8
   },
   {
@@ -440,7 +400,6 @@ export const images: SourceImageData[] = [
     width: 5762,
     height: 3841,
     tags: ['wildlife'],
-    dateAdded: '2025-05-22',
     rating: 8
   },
   {
@@ -450,7 +409,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['wildlife'],
-    dateAdded: '2025-05-22',
     rating: 8
   },
   {
@@ -460,7 +418,6 @@ export const images: SourceImageData[] = [
     width: 5688,
     height: 4000,
     tags: ['birds'],
-    dateAdded: '2025-05-22',
     rating: 8
   },
   {
@@ -470,7 +427,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['flowers', 'macro'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -480,7 +436,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['nature', 'abstract'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -490,7 +445,6 @@ export const images: SourceImageData[] = [
     width: 2048,
     height: 1536,
     tags: ['abstract'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -500,7 +454,6 @@ export const images: SourceImageData[] = [
     width: 5364,
     height: 3700,
     tags: ['architecture'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -510,7 +463,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['street', 'portrait'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -520,7 +472,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['street', 'portrait'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -530,7 +481,6 @@ export const images: SourceImageData[] = [
     width: 5972,
     height: 3981,
     tags: ['wildlife'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -540,7 +490,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['wildlife'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -550,7 +499,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['wildlife'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -560,7 +508,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -570,7 +517,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -580,7 +526,6 @@ export const images: SourceImageData[] = [
     width: 5716,
     height: 3811,
     tags: ['wildlife'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -590,7 +535,6 @@ export const images: SourceImageData[] = [
     width: 5562,
     height: 3539,
     tags: ['wildlife'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -600,7 +544,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['wildlife'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -610,7 +553,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['wildlife'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -620,7 +562,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 3746,
     tags: ['nature', 'landscape'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -630,7 +571,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['flowers', 'nature', 'landscape'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -640,7 +580,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['abstract'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -650,7 +589,6 @@ export const images: SourceImageData[] = [
     width: 5780,
     height: 4000,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 8
   },
   {
@@ -660,7 +598,6 @@ export const images: SourceImageData[] = [
     width: 6096,
     height: 4144,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -670,7 +607,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 7
   },
   {
@@ -680,7 +616,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 8.5
   },
   {
@@ -690,7 +625,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['flowers', 'nature', 'macro'],
-    dateAdded: '2025-05-22',
     rating: 8.5
   },
   {
@@ -700,7 +634,6 @@ export const images: SourceImageData[] = [
     width: 5977,
     height: 3985,
     tags: ['architecture', 'city'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -710,7 +643,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -720,7 +652,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -730,7 +661,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -740,7 +670,6 @@ export const images: SourceImageData[] = [
     width: 5184,
     height: 3875,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 9
   },
   {
@@ -750,7 +679,6 @@ export const images: SourceImageData[] = [
     width: 5808,
     height: 3779,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 9
   },
   {
@@ -760,7 +688,6 @@ export const images: SourceImageData[] = [
     width: 5700,
     height: 4000,
     tags: ['nature'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -770,7 +697,6 @@ export const images: SourceImageData[] = [
     width: 3905,
     height: 2347,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -780,7 +706,6 @@ export const images: SourceImageData[] = [
     width: 6064,
     height: 4208,
     tags: ['nature', 'macro'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -790,7 +715,6 @@ export const images: SourceImageData[] = [
     width: 5840,
     height: 4000,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 9
   },
   {
@@ -800,7 +724,6 @@ export const images: SourceImageData[] = [
     width: 5718,
     height: 3271,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 8
   },
   {
@@ -810,7 +733,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -820,7 +742,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -830,7 +751,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 8.5
   },
   {
@@ -840,7 +760,6 @@ export const images: SourceImageData[] = [
     width: 5861,
     height: 3907,
     tags: ['animals'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -850,7 +769,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['automotive'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -860,7 +778,6 @@ export const images: SourceImageData[] = [
     width: 5769,
     height: 3815,
     tags: ['automotive', 'macro'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -870,7 +787,6 @@ export const images: SourceImageData[] = [
     width: 5908,
     height: 3942,
     tags: ['automotive'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -880,7 +796,6 @@ export const images: SourceImageData[] = [
     width: 5481,
     height: 3642,
     tags: ['macro', 'wildlife'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -890,7 +805,6 @@ export const images: SourceImageData[] = [
     width: 5919,
     height: 3919,
     tags: ['flowers', 'macro', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 8
   },
   {
@@ -900,7 +814,6 @@ export const images: SourceImageData[] = [
     width: 5862,
     height: 3896,
     tags: ['flowers', 'macro', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 8.5
   },
   {
@@ -910,7 +823,6 @@ export const images: SourceImageData[] = [
     width: 5850,
     height: 3919,
     tags: ['flowers', 'nature'],
-    dateAdded: '2025-05-22',
     rating: 9.25
   },
   {
@@ -920,7 +832,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['birds', 'wildlife'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -930,7 +841,6 @@ export const images: SourceImageData[] = [
     width: 4583,
     height: 3020,
     tags: ['birds', 'wildlife'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -940,7 +850,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['portrait', 'people'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -950,7 +859,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['landscape', 'night', 'abstract'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -960,7 +868,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['aviation'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -970,7 +877,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['birds', 'wildlife'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -980,7 +886,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['aviation'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -990,7 +895,6 @@ export const images: SourceImageData[] = [
     width: 5144,
     height: 3213,
     tags: ['aviation'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -1000,7 +904,6 @@ export const images: SourceImageData[] = [
     width: 4898,
     height: 3754,
     tags: ['aviation'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -1010,7 +913,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['aviation'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -1020,7 +922,6 @@ export const images: SourceImageData[] = [
     width: 5626,
     height: 3252,
     tags: ['aviation'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -1030,7 +931,6 @@ export const images: SourceImageData[] = [
     width: 6014,
     height: 4016,
     tags: ['automotive', 'abstract'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -1040,7 +940,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['automotive', 'abstract'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -1050,7 +949,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['pets', 'animals', 'portrait'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -1060,7 +958,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['pets', 'animals', 'portrait'],
-    dateAdded: '2025-05-22',
     rating: 8.25
   },
   {
@@ -1070,7 +967,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['pets', 'animals', 'portrait'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -1080,7 +976,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['pets', 'animals', 'portrait'],
-    dateAdded: '2025-05-22',
     rating: 0
   },
   {
@@ -1090,7 +985,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['pets', 'animals', 'portrait'],
-    dateAdded: '2025-05-22',
     rating: 8.5
   },
   {
@@ -1100,7 +994,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['pets', 'animals', 'portrait'],
-    dateAdded: '2025-05-22',
     rating: 8.5
   },
   {
@@ -1110,7 +1003,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['pets', 'animals', 'portrait'],
-    dateAdded: '2025-05-22',
     rating: 8.5
   },
   {
@@ -1120,7 +1012,6 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['pets', 'animals', 'portrait'],
-    dateAdded: '2025-05-22',
     rating: 8.5
   },
   {
@@ -1130,17 +1021,15 @@ export const images: SourceImageData[] = [
     width: 5145,
     height: 2894,
     tags: ['astro'],
-    dateAdded: '2025-05-22',
     rating: 9.5
   },
   {
     id: '112',
-    src: 'pic(4of28).webp',
+    src: 'pic (4 of 28).webp',
     alt: 'Pic (4 of 28)',
     width: 6000,
     height: 4000,
     tags: ['nature'],
-    dateAdded: '2025-05-22',
     rating: 7.5
   },
   {
@@ -1150,7 +1039,24 @@ export const images: SourceImageData[] = [
     width: 6000,
     height: 4000,
     tags: ['people', 'portrait'],
-    dateAdded: '2025-05-22',
+    rating: 8
+  },
+  {
+    id: '114',
+    src: 'edited-3131.webp',
+    alt: '3131',
+    width: 6000,
+    height: 4000,
+    tags: ['nature', 'flowers'],
+    rating: 8
+  },
+  {
+    id: '115',
+    src: 'MVI_0415_pipp_limit000010-9999999_lapl3_ap203_conv.webp',
+    alt: 'moon',
+    width: 2527,
+    height: 1837,
+    tags: ['astro'],
     rating: 8
   },
 ];

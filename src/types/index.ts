@@ -6,7 +6,6 @@ export interface SourceImageData {
   width: number;
   height: number;
   tags: string[];
-  dateAdded: string;
   rating: number;
   sourceFile?: string;
 }
@@ -19,7 +18,6 @@ export interface ImageData {
   width: number;
   height: number;
   tags: string[];
-  dateAdded: string;
   rating: number;
   files: Record<'full' | 'large' | 'medium' | 'small' | 'thumbnail', string>;
   cameraModel?: string;
@@ -28,6 +26,7 @@ export interface ImageData {
   iso?: number;
   focalLength?: string;
   lensModel?: string;
+  dateTaken?: string; // ISO string from EXIF DateTimeOriginal, CreateDate, or DateTime
   sourceFile?: string;
 }
 

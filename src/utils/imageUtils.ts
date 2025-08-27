@@ -78,9 +78,16 @@ export const sortImages = (images: ImageData[], sortOption: SortOption): ImageDa
         return ratingDiff;
       });
     case 'new':
-      return [...images].sort((a, b) => 
-        new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
-      );
+      return [...images].sort((a, b) => {
+        // Sort by date taken from EXIF metadata (descending - newest first)
+        // Fall back to alt text comparison if dates are not available
+        if (!a.dateTaken && !b.dateTaken) {
+          return a.alt.localeCompare(b.alt);
+        }
+        if (!a.dateTaken) return 1; // Images without dates go to end
+        if (!b.dateTaken) return -1; // Images without dates go to end
+        return new Date(b.dateTaken).getTime() - new Date(a.dateTaken).getTime();
+      });
     case 'category':
       return [...images].sort((a, b) => {
         // Sort by first tag, then by rating

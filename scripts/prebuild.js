@@ -124,7 +124,6 @@ async function main() {
         width,
         height,
         tags: image.tags,
-        dateAdded: image.dateAdded,
         rating: image.rating,
         files,
         sourceFile: image.sourceFile,
@@ -141,7 +140,6 @@ async function main() {
         width: image.width,
         height: image.height,
         tags: image.tags,
-        dateAdded: image.dateAdded,
         rating: image.rating,
         files: generatePlaceholderFiles(id),
         sourceFile: image.sourceFile
@@ -327,7 +325,7 @@ async function extractExifData(sourceFileName, exifr) {
   
   try {
     const exif = await exifr.parse(sourcePath, {
-      pick: ['Make', 'Model', 'FNumber', 'ExposureTime', 'ISO', 'FocalLength', 'LensModel']
+      pick: ['Make', 'Model', 'FNumber', 'ExposureTime', 'ISO', 'FocalLength', 'LensModel', 'DateTimeOriginal', 'CreateDate', 'DateTime']
     });
 
     if (!exif) return {};
@@ -339,6 +337,15 @@ async function extractExifData(sourceFileName, exifr) {
       const makeTrimmed = make.trim();
       const modelTrimmed = model.trim();
 
+      // Split model into words
+      const modelWords = modelTrimmed.split(/\s+/);
+
+      // Check if the first word of model matches make (case insensitive)
+      if (modelWords.length > 1 && modelWords[0].toLowerCase() === makeTrimmed.toLowerCase()) {
+        // Remove the duplicate manufacturer name from the beginning
+        return modelWords.slice(1).join(' ');
+      }
+
       // Check if model starts with the make name (case insensitive) followed by space
       if (modelTrimmed.toLowerCase().startsWith(makeTrimmed.toLowerCase() + ' ')) {
         // Return the model as-is since it already includes the manufacturer
@@ -349,13 +356,24 @@ async function extractExifData(sourceFileName, exifr) {
       return `${makeTrimmed} ${modelTrimmed}`;
     };
 
+    // Extract date taken from EXIF - prefer DateTimeOriginal, then CreateDate, then DateTime
+    let dateTaken = null;
+    if (exif.DateTimeOriginal) {
+      dateTaken = new Date(exif.DateTimeOriginal).toISOString();
+    } else if (exif.CreateDate) {
+      dateTaken = new Date(exif.CreateDate).toISOString();
+    } else if (exif.DateTime) {
+      dateTaken = new Date(exif.DateTime).toISOString();
+    }
+
     return {
       cameraModel: exif.Make && exif.Model ? cleanCameraModel(exif.Make, exif.Model) : exif.Model,
       fStop: exif.FNumber ? `f/${exif.FNumber}` : undefined,
       exposureTime: exif.ExposureTime ? formatExposureTime(exif.ExposureTime) : undefined,
       iso: exif.ISO,
       focalLength: exif.FocalLength ? `${Math.round(exif.FocalLength)}mm` : undefined,
-      lensModel: exif.LensModel
+      lensModel: exif.LensModel,
+      dateTaken: dateTaken
     };
   } catch (error) {
     console.warn(`⚠️  Could not extract EXIF from ${sourceFileName}:`, error.message);
@@ -528,7 +546,6 @@ async function simulateImageProcessing(sourceImages) {
       width: image.width,
       height: image.height,
       tags: image.tags,
-      dateAdded: image.dateAdded,
       rating: image.rating,
       files: generatePlaceholderFiles(id),
       sourceFile: image.sourceFile || null
